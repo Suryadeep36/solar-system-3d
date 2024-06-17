@@ -11,13 +11,25 @@
     position: absolute;
 }
 .box{
-    margin-bottom: 50rem;
+    margin-top: 2rem;
+    background-color: #A7E6FF;
+    border: 2px #402E7A solid;
+    margin-bottom: 45rem;
+    border-radius: 2rem;
 }
 header{
     grid-column: 2/12;
 }
 
 #sun{
-    border: 2px black solid;
-    grid-column: 2/4;
+    border: 2px #402E7A solid;
+    grid-column-start: 2;
+    width: 30rem;
+    border-radius: 2rem;
+    padding: 2rem;
+}
+
+h1, h2, p{
+    color: #4C3BCF;
+
 }

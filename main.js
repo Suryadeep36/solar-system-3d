@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { vec3 } from 'three/examples/jsm/nodes/Nodes.js';
 //scene settings
 const scene =  new THREE.Scene();
 const backgroundTexture = new THREE.TextureLoader().load( "./space.jpeg" );
@@ -14,9 +15,23 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(window.innerWidth, window.innerHeight);
 
+//directional light
+const directionalLight = new THREE.DirectionalLight( 'white', 5 );
+const dirVector = new THREE.Vector3(0,0,1);
+directionalLight.position.add(dirVector);
+scene.add( directionalLight);
+
+
+// //helper for directional light
+// const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
+// scene.add(directionalLightHelper);
+
+
+
+
 //sun model
 const sunGeometry = new THREE.SphereGeometry(5, 32, 16);
-const sunMaterial = new THREE.MeshBasicMaterial({
+const sunMaterial = new THREE.MeshStandardMaterial({
     map: new THREE.TextureLoader().load('./sun.jpg')
 })
 const sun = new THREE.Mesh( sunGeometry, sunMaterial ); 
@@ -41,5 +56,4 @@ function moveCamera(){
     let t = document.body.getBoundingClientRect().top;
     sun.position.x =  (t * 0.01) + sunInitPosX;
     sun.position.z = t*-0.02;
-   
 }
