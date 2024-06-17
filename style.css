@@ -1,0 +1,23 @@
+#bg{
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.main{
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(12,1fr);
+    position: absolute;
+}
+.box{
+    margin-bottom: 50rem;
+}
+header{
+    grid-column: 2/12;
+}
+
+#sun{
+    border: 2px black solid;
+    grid-column: 2/4;
+}
