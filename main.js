@@ -1,5 +1,24 @@
 import * as THREE from 'three';
 
+
+//validation to check if screen is in landscape
+console.log();
+if(screen.orientation.type == "portrait-primary" || screen.orientation.type == "portrait-secondary"){
+    stuffToDoIfNotLandScape();
+}
+
+screen.orientation.addEventListener('change',(event)=>{
+    const type = event.target.type;
+    const angle = event.target.angle;
+    console.log(`ScreenOrientation change: ${type}, ${angle} degrees.`);
+    if(type == "portrait-primary" || type == "portrait-secondary"){
+        stuffToDoIfNotLandScape();
+    }
+    else{
+        stuffToDoIfLandScape();
+    }
+})
+
 //scene settings
 const scene =  new THREE.Scene();
 const backgroundTexture = new THREE.TextureLoader().load( "./space.jpeg" );
@@ -86,3 +105,17 @@ function handleResize() {
 
 // add event listener for window resize
 window.addEventListener('resize', handleResize);
+
+
+function stuffToDoIfNotLandScape(){
+    document.body.style.visibility = 'hidden';
+    let ele = document.getElementById('warning')
+    ele.style.visibility = 'visible';
+    console.log(ele);
+}
+function stuffToDoIfLandScape(){
+    document.body.style.visibility = 'visible';
+    let ele = document.getElementById('warning')
+    ele.style.visibility = 'hidden';
+    console.log(ele);
+}
