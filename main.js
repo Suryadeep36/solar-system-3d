@@ -117,6 +117,8 @@ saturn.position.x = 200;
 saturn.position.z = -400;
 scene.add(saturn);
 
+
+
 //saturn rings model
 const saturnRingGeometry = new THREE.RingGeometry(7, 12, 32);
 const saturnRingMaterial = new THREE.MeshBasicMaterial({
@@ -131,18 +133,21 @@ saturnRings.rotateX(2);
 scene.add(saturnRings);
 
 //fix for the texture of saturn's ring
-let pos = saturnRingGeometry.attributes.position;
-let uv = saturnRingGeometry.attributes.uv;
-let v3 = new THREE.Vector3();
-let v2 = new THREE.Vector2();
-for (let i = 0; i < pos.count; i++) {
-    v3.fromBufferAttribute(pos, i);
-    let angle = Math.atan2(v3.y, v3.x) / (2 * Math.PI);
-    angle = (angle + 1) / 2;
-    v2.set(angle, v3.z > 0 ? 0 : 1);
-    uv.setXY(i, v2.x, v2.y);
+const uvAttribute = saturnRingGeometry.attributes.uv;
+
+for (let i = 0; i < uvAttribute.count; i++) {
+    const vertex = new THREE.Vector3().fromBufferAttribute(saturnRingGeometry.attributes.position, i);
+    const radius = vertex.length();
+    const angle = Math.atan2(vertex.y, vertex.x);
+    const normalizedAngle = (angle / (2 * Math.PI)) + 0.5;
+    const innerRadius = 7;
+    const outerRadius = 12;
+    const normalizedRadius = (radius - innerRadius) / (outerRadius - innerRadius);
+    uvAttribute.setXY(i, normalizedRadius, normalizedAngle);
 }
 
+// Mark the attribute as needing an update
+uvAttribute.needsUpdate = true;
 //uranus model
 const uranusGeometry = new THREE.SphereGeometry(5, 32, 16);
 const uranusMaterial = new THREE.MeshStandardMaterial({
@@ -170,16 +175,16 @@ renderer.setAnimationLoop(renderStuff);
 
 //function to animate everything
 function renderStuff(){
-    sun.rotateY(0.02);
-    mercury.rotateY(0.098);
-    venus.rotateY(0.2);
+    sun.rotateY(0.025);
+    mercury.rotateY(0.0008);
+    venus.rotateY(0.0008);
     earth.rotateY(0.02);
     mars.rotateY(0.02);
-    jupital.rotateY(0.008);
-    saturn.rotateY(0.009);
-    saturnRings.rotateZ(0.009);
-    uranus.rotateY(0.015);
-    neptune.rotateY(0.013);
+    jupital.rotateY(0.57);
+    saturn.rotateY(0.47);
+    saturnRings.rotateZ(-0.47);
+    uranus.rotateY(0.187);
+    neptune.rotateY(0.123);
     renderer.render( scene, camera );
 }
 

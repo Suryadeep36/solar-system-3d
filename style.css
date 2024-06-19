@@ -60,6 +60,7 @@ h1, h2{
     color: #4C3BCF;
 }
 p{
+    font-size: medium;
     color: #4C3BCF;
 }
 
@@ -71,5 +72,8 @@ p{
 @media screen and (max-width: 920px) {
     .planet {
         grid-column: 1/8;
+    }
+    p{
+        font-size: small;
     }
 }
