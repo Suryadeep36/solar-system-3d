@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/Addons.js';
+let is360On = false;
 //validations for landscape mode
 if(screen.orientation.type == "portrait-primary" || screen.orientation.type == "portrait-secondary"){
     stuffToDoIfNotLandScape();
@@ -16,13 +18,11 @@ screen.orientation.addEventListener('change',(event)=>{
 
 //scene settings
 const scene =  new THREE.Scene();
-const backgroundTexture = new THREE.TextureLoader().load( "./space.jpeg" );
-scene.background = backgroundTexture;
-
+// const backgroundTexture = new THREE.TextureLoader().load( "./space.jpeg" );
+// scene.background = backgroundTexture;
 //camera settings
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 camera.aspect= window.innerWidth/window.innerHeight;
-camera.position.z = 25;
 
 //renderer settings
 const renderer = new THREE.WebGLRenderer({
@@ -36,24 +36,52 @@ const dirVector = new THREE.Vector3(0,0,1);
 directionalLight.position.add(dirVector);
 scene.add( directionalLight);
 
-
 // //helper for directional light
 // const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
 // scene.add(directionalLightHelper);
 
-//adding 250 stars
-// Array(250).fill().forEach(addStar)
+//adding 25000 stars
 for(let i = 10; i <= 500; i+=10){
     for(let j = 1; j <= 50; j++){
         addStar(i);
     }
 }
 
+//orbit controls
+const controls = new OrbitControls( camera, renderer.domElement );
+camera.position.z = 25;
+controls.update();
+document.body.addEventListener('keydown', (e) =>{
+    if(e.key.toLowerCase() == 'v'){
+        if(is360On == true){
+            is360On = false;
+            document.querySelector('.main').style.zIndex = '99';
+			document.querySelector('canvas').style.zIndex = '1';
+            alert('360 degree view off')
+            controls.reset();
+        }
+        else{
+            is360On = true;
+			document.querySelector('.main').style.zIndex = '-1';
+			document.querySelector('canvas').style.zIndex = '99';
+            alert('360 degree view on')
+        }
+    }
+})
+//galaxy model
+const galaxyGeometry = new THREE.SphereGeometry(1000, 700, 1400);
+const galaxyMaterial = new THREE.MeshBasicMaterial({
+    map:  new THREE.TextureLoader().load( "./galaxy.png" ),
+    side: THREE.BackSide,
+    transparent: true
+});
+const galaxy = new THREE.Mesh(galaxyGeometry, galaxyMaterial);
+scene.add(galaxy);
 
 //sun model
 const sunGeometry = new THREE.SphereGeometry(15, 32, 16);
-const sunMaterial = new THREE.MeshStandardMaterial({
-    map: new THREE.TextureLoader().load('./sun.jpg')
+const sunMaterial = new THREE.MeshBasicMaterial({
+    color: '#FDB813'
 })
 const sun = new THREE.Mesh( sunGeometry, sunMaterial ); 
 sun.position.z = -50;
@@ -196,7 +224,10 @@ function moveCamera(){
     let t = document.body.getBoundingClientRect().top;
     camera.position.z = t * 0.02;
     camera.position.x = -t * 0.01;
+    // // camera.rotation.y = 90 * Math.PI / 180;
+    // controls.update();
 }
+
 
 //this function will add star to random place in the space
 function addStar(k){
