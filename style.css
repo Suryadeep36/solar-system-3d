@@ -13,6 +13,7 @@
 .box{
     margin-top: 2rem;
     background-color: #A7E6FF;
+
     border: 2px #402E7A solid;
     margin-bottom: 45rem;
     border-radius: 2rem;
@@ -27,6 +28,7 @@ header{
     margin-bottom: 125rem;
     border-radius: 2rem;
     padding: 2rem;
+    opacity: 0.8;
 }
 #sun{
     margin-bottom: 135rem;
@@ -64,6 +66,10 @@ h1, h2, h3{
 }
 p{
     font-size: medium;
+    color: #4C3BCF;
+}
+a{
+    text-decoration: none;
     color: #4C3BCF;
 }
 

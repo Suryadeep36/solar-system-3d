@@ -18,11 +18,15 @@ screen.orientation.addEventListener('change',(event)=>{
 
 //scene settings
 const scene =  new THREE.Scene();
-// const backgroundTexture = new THREE.TextureLoader().load( "./space.jpeg" );
-// scene.background = backgroundTexture;
+
 //camera settings
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
 camera.aspect= window.innerWidth/window.innerHeight;
+camera.position.z = 25;
+
+// //camera helper
+// const cameraHelper = new THREE.CameraHelper(camera);
+// scene.add(cameraHelper);
 
 //renderer settings
 const renderer = new THREE.WebGLRenderer({
@@ -32,7 +36,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 //directional light
 const directionalLight = new THREE.DirectionalLight( 'white', 5 );
-const dirVector = new THREE.Vector3(0,0,1);
+const dirVector = new THREE.Vector3(0,0,10);
 directionalLight.position.add(dirVector);
 scene.add( directionalLight);
 
@@ -49,8 +53,6 @@ for(let i = 10; i <= 500; i+=10){
 
 //orbit controls
 const controls = new OrbitControls( camera, renderer.domElement );
-camera.position.z = 25;
-controls.update();
 document.body.addEventListener('keydown', (e) =>{
     if(e.key.toLowerCase() == 'v'){
         if(is360On == true){
@@ -61,10 +63,12 @@ document.body.addEventListener('keydown', (e) =>{
             controls.reset();
         }
         else{
+            controls.target.set(camera.position.x, camera.position.y, camera.position.z);
             is360On = true;
 			document.querySelector('.main').style.zIndex = '-1';
 			document.querySelector('canvas').style.zIndex = '99';
-            alert('360 degree view on')
+            console.log(controls)
+            alert('360 degree view on press the up arrow key and start exploring!!')
         }
     }
 })
@@ -81,7 +85,7 @@ scene.add(galaxy);
 //sun model
 const sunGeometry = new THREE.SphereGeometry(15, 32, 16);
 const sunMaterial = new THREE.MeshBasicMaterial({
-    color: '#FDB813'
+    map:  new THREE.TextureLoader().load( "./sun.jpg" ),
 })
 const sun = new THREE.Mesh( sunGeometry, sunMaterial ); 
 sun.position.z = -50;
@@ -204,6 +208,7 @@ document.body.onscroll = moveCamera;
 
 renderer.setAnimationLoop(renderStuff);
 
+
 //function to animate everything
 function renderStuff(){
     sun.rotateY(0.025);
@@ -224,8 +229,6 @@ function moveCamera(){
     let t = document.body.getBoundingClientRect().top;
     camera.position.z = t * 0.02;
     camera.position.x = -t * 0.01;
-    // // camera.rotation.y = 90 * Math.PI / 180;
-    // controls.update();
 }
 
 
@@ -252,7 +255,6 @@ function handleResize() {
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     renderer.setSize(width, height);
-    scene.background = backgroundTexture;
 }
 
 // add event listener for window resize
