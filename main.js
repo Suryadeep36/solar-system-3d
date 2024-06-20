@@ -58,6 +58,7 @@ document.body.addEventListener('keydown', (e) =>{
         if(is360On == true){
             is360On = false;
             document.querySelector('.main').style.zIndex = '99';
+            document.querySelector('#warning').style.zIndex = '99';
 			document.querySelector('canvas').style.zIndex = '1';
             alert('360 degree view off')
             controls.reset();
@@ -66,6 +67,7 @@ document.body.addEventListener('keydown', (e) =>{
             controls.target.set(camera.position.x, camera.position.y, camera.position.z);
             is360On = true;
 			document.querySelector('.main').style.zIndex = '-1';
+			document.querySelector('#warning').style.zIndex = '-1';
 			document.querySelector('canvas').style.zIndex = '99';
             console.log(controls)
             alert('360 degree view on press the up arrow key and start exploring!!')

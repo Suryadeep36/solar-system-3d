@@ -3,7 +3,6 @@
     top: 0;
     left: 0;
 }
-
 .main{
     display: grid;
     width: 100%;
@@ -13,9 +12,8 @@
 .box{
     margin-top: 2rem;
     background-color: #A7E6FF;
-
     border: 2px #402E7A solid;
-    margin-bottom: 45rem;
+    margin-bottom: 60rem;
     border-radius: 2rem;
 }
 header{
@@ -55,7 +53,7 @@ header{
     margin-bottom: 290rem;
 }
 #neptune{
-    margin-bottom: 50rem;
+    margin-bottom: 70rem;
 }
 #end{
     grid-column: 2/12;
@@ -74,8 +72,13 @@ a{
 }
 
 #warning{
+    position: absolute;
     width: 100%;
     height: 100%;
+    align-items: center;
+}
+#warning > div{
+    justify-content: center;
 }
 
 @media screen and (max-width: 920px) {
