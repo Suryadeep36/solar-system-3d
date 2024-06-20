@@ -32,30 +32,33 @@ header{
     margin-bottom: 135rem;
 }
 #mercury{
-    margin-bottom: 20rem;
+    margin-bottom: 30rem;
 }
 #venus{
-    margin-bottom: 35rem;
+    margin-bottom: 45rem;
 }
 #earth{
-    margin-bottom: 75rem;
+    margin-bottom: 82rem;
 }
 #mars{
-    margin-bottom: 440rem;
+    margin-bottom: 445rem;
 }
 #jupiter{
     margin-bottom: 270rem;
 }
 #saturn{
-    margin-bottom: 300rem;
+    margin-bottom: 340rem;
 }
 #uranus{
-    margin-bottom: 300rem;
+    margin-bottom: 290rem;
 }
 #neptune{
-    margin-bottom: 400rem;
+    margin-bottom: 50rem;
 }
-h1, h2{
+#end{
+    grid-column: 2/12;
+}
+h1, h2, h3{
     text-align: center;
     color: #4C3BCF;
 }
@@ -72,6 +75,7 @@ p{
 @media screen and (max-width: 920px) {
     .planet {
         grid-column: 1/8;
+        padding: 1rem;
     }
     p{
         font-size: small;

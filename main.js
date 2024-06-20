@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-
 //validations for landscape mode
 if(screen.orientation.type == "portrait-primary" || screen.orientation.type == "portrait-secondary"){
     stuffToDoIfNotLandScape();
@@ -43,8 +42,12 @@ scene.add( directionalLight);
 // scene.add(directionalLightHelper);
 
 //adding 250 stars
-Array(250).fill().forEach(addStar)
-
+// Array(250).fill().forEach(addStar)
+for(let i = 10; i <= 500; i+=10){
+    for(let j = 1; j <= 50; j++){
+        addStar(i);
+    }
+}
 
 
 //sun model
@@ -191,22 +194,24 @@ function renderStuff(){
 //this module will help when user scrolls
 function moveCamera(){
     let t = document.body.getBoundingClientRect().top;
-    // sun.position.x =  (t * 0.01) + sunInitPosX;
     camera.position.z = t * 0.02;
     camera.position.x = -t * 0.01;
 }
 
 //this function will add star to random place in the space
-function addStar(){
+function addStar(k){
     const starGeomatry = new THREE.SphereGeometry(0.15, 26, 26);
     const starMaterial = new THREE.MeshStandardMaterial({
         color: "yellow"
     })
     const star = new THREE.Mesh(starGeomatry, starMaterial);
-    const [x, y, z] = Array(3).fill().map(()=> THREE.MathUtils.randFloatSpread(100));
+    const [x, y] = Array(2).fill().map(() => THREE.MathUtils.randFloatSpread(1000));
+    const z = -k
     star.position.set(x, y, z);
     scene.add(star);
 }
+
+
 
 
 // function to handle window resize
